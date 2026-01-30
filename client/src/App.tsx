@@ -8,6 +8,9 @@ import Home from "./pages/Home";
 import PlanSelection from "./pages/PlanSelection";
 import Dashboard from "./pages/Dashboard";
 import RomaneioForm from "./pages/RomaneioForm";
+import RomaneioDetail from "./pages/RomaneioDetail";
+import Profile from "./pages/Profile";
+import AdminDashboard from "./pages/AdminDashboard";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -17,7 +20,9 @@ function Router() {
       <Route path={"/plans"} component={PlanSelection} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/romaneio/new"} component={RomaneioForm} />
-      <Route path={"/romaneio/:id"} component={RomaneioForm} />
+      <Route path={"/romaneio/:id"} component={RomaneioDetail} />
+      <Route path={"/profile"} component={Profile} />
+      <Route path={"/admin"} component={AdminDashboard} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
