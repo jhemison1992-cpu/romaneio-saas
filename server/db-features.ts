@@ -225,20 +225,10 @@ export async function seedSubscriptionPlans() {
 
   const plans: InsertSubscriptionPlan[] = [
     {
-      name: "Gratuito",
-      slug: "free",
-      description: "Plano gratuito com funcionalidades básicas",
-      monthlyPrice: "0.00",
-      features: ["romaneios_basicos", "ate_5_romaneios", "suporte_email"],
-      maxRomaneios: 5,
-      maxUsers: 1,
-      isActive: true,
-    },
-    {
       name: "Starter",
       slug: "starter",
       description: "Perfeito para pequenas empresas",
-      monthlyPrice: "29.90",
+      monthlyPrice: "79.90",
       features: [
         "romaneios_ilimitados",
         "ate_3_usuarios",
@@ -253,7 +243,7 @@ export async function seedSubscriptionPlans() {
       name: "Profissional",
       slug: "professional",
       description: "Para empresas em crescimento",
-      monthlyPrice: "99.90",
+      monthlyPrice: "159.80",
       features: [
         "romaneios_ilimitados",
         "ate_10_usuarios",

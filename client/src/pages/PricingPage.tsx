@@ -6,29 +6,6 @@ import { getLoginUrl } from "@/const";
 
 const plans = [
   {
-    id: "free",
-    name: "Gratuito",
-    description: "Perfeito para começar",
-    price: "R$ 0",
-    period: "/mês",
-    icon: <Zap className="h-6 w-6 text-blue-500" />,
-    features: [
-      "Até 5 romaneios por mês",
-      "Visualização básica",
-      "Suporte por email",
-      "Sem limite de usuários",
-      "Exportação em PDF",
-    ],
-    notIncluded: [
-      "Relatórios avançados",
-      "Integração com sistemas",
-      "Suporte prioritário",
-      "Templates customizados",
-    ],
-    cta: "Começar Agora",
-    highlighted: false,
-  },
-  {
     id: "starter",
     name: "Iniciante",
     description: "Para pequenas operações",
