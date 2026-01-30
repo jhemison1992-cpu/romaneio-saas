@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `inspections` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`companyId` int,\n\t`title` varchar(255) NOT NULL,\n\t`location` text,\n\t`date` timestamp NOT NULL,\n\t`status` enum('pending','completed','cancelled') NOT NULL DEFAULT 'pending',\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `inspections_id` PRIMARY KEY(`id`)\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute CREATE TABLE `inspections` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`companyId` int,\n\t`title` varchar(255) NOT NULL,\n\t`location` text,\n\t`date` timestamp NOT NULL,\n\t`status` enum('pending','completed','cancelled') NOT NULL DEFAULT 'pending',\n\t`notes` text,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `inspections_id` PRIMARY KEY(`id`)\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 138
+}

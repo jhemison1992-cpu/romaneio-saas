@@ -122,6 +122,25 @@ export type RomaneioItem = typeof romaneioItems.$inferSelect;
 export type InsertRomaneioItem = typeof romaneioItems.$inferInsert;
 
 /**
+ * Inspections/Vistorias
+ */
+export const inspections = mysqlTable("inspections", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  companyId: int("companyId"),
+  title: varchar("title", { length: 255 }).notNull(),
+  location: text("location"),
+  date: timestamp("date").notNull(),
+  status: mysqlEnum("status", ["pending", "completed", "cancelled"]).notNull().default("pending"),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Inspection = typeof inspections.$inferSelect;
+export type InsertInspection = typeof inspections.$inferInsert;
+
+/**
  * Audit log for tracking changes
  */
 export const auditLogs = mysqlTable("auditLogs", {

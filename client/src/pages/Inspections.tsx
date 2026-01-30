@@ -1,11 +1,12 @@
 import { useAuth } from "@/_core/hooks/useAuth";
+import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
@@ -26,9 +27,12 @@ export default function Inspections() {
     title: "",
     location: "",
     date: new Date().toISOString().split("T")[0],
-    status: "pending" as "pending" | "completed",
     notes: "",
   });
+
+  const { data: inspections = [], isLoading, refetch } = trpc.inspections.list.useQuery();
+  const createMutation = trpc.inspections.create.useMutation();
+  const deleteMutation = trpc.inspections.delete.useMutation();
 
   if (!isAuthenticated) {
     navigate("/");
@@ -49,17 +53,33 @@ export default function Inspections() {
     }
 
     try {
+      await createMutation.mutateAsync({
+        title: formData.title,
+        location: formData.location,
+        date: new Date(formData.date),
+        notes: formData.notes,
+      });
       toast.success("Vistoria criada com sucesso!");
       setFormData({
         title: "",
         location: "",
         date: new Date().toISOString().split("T")[0],
-        status: "pending",
         notes: "",
       });
       setShowForm(false);
+      refetch();
     } catch (error) {
       toast.error("Erro ao criar vistoria. Tente novamente.");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteMutation.mutateAsync({ id });
+      toast.success("Vistoria deletada com sucesso!");
+      refetch();
+    } catch (error) {
+      toast.error("Erro ao deletar vistoria.");
     }
   };
 
@@ -163,7 +183,7 @@ export default function Inspections() {
                   >
                     Cancelar
                   </Button>
-                  <Button type="submit">
+                  <Button type="submit" disabled={createMutation.isPending}>
                     Salvar Vistoria
                   </Button>
                 </div>
@@ -193,11 +213,48 @@ export default function Inspections() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                      Nenhuma vistoria criada ainda
-                    </TableCell>
-                  </TableRow>
+                  {isLoading ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-slate-500">
+                        Carregando...
+                      </TableCell>
+                    </TableRow>
+                  ) : inspections.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={5} className="text-center py-8 text-slate-500">
+                        Nenhuma vistoria criada ainda
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    inspections.map((inspection) => (
+                      <TableRow key={inspection.id}>
+                        <TableCell>{inspection.title}</TableCell>
+                        <TableCell>{inspection.location || "-"}</TableCell>
+                        <TableCell>{new Date(inspection.date).toLocaleDateString("pt-BR")}</TableCell>
+                        <TableCell>
+                          <span className={`px-2 py-1 rounded text-sm font-medium ${
+                            inspection.status === "completed" ? "bg-green-100 text-green-700" :
+                            inspection.status === "cancelled" ? "bg-red-100 text-red-700" :
+                            "bg-yellow-100 text-yellow-700"
+                          }`}>
+                            {inspection.status === "completed" ? "Concluída" :
+                             inspection.status === "cancelled" ? "Cancelada" :
+                             "Pendente"}
+                          </span>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDelete(inspection.id)}
+                            disabled={deleteMutation.isPending}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  )}
                 </TableBody>
               </Table>
             </div>

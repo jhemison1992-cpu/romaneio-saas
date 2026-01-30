@@ -6,11 +6,13 @@ import {
   companies,
   romaneios,
   romaneioItems,
+  inspections,
   InsertSubscriptionPlan,
   InsertUserSubscription,
   InsertCompany,
   InsertRomaneio,
   InsertRomaneioItem,
+  InsertInspection,
 } from "../drizzle/schema";
 
 /**
@@ -280,4 +282,63 @@ export async function seedSubscriptionPlans() {
   for (const plan of plans) {
     await db.insert(subscriptionPlans).values(plan);
   }
+}
+
+
+/**
+ * Inspections/Vistorias Management
+ */
+
+export async function getUserInspections(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(inspections)
+    .where(eq(inspections.userId, userId))
+    .orderBy(desc(inspections.createdAt));
+}
+
+export async function getInspectionById(inspectionId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(inspections)
+    .where(eq(inspections.id, inspectionId))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function createInspection(inspection: InsertInspection) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(inspections).values(inspection);
+  return result;
+}
+
+export async function updateInspection(
+  inspectionId: number,
+  updates: Partial<InsertInspection>
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  return db
+    .update(inspections)
+    .set(updates)
+    .where(eq(inspections.id, inspectionId));
+}
+
+export async function deleteInspection(inspectionId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  return db
+    .delete(inspections)
+    .where(eq(inspections.id, inspectionId));
 }
