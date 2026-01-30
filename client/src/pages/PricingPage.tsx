@@ -110,10 +110,10 @@ export default function PricingPage() {
       <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Planos Simples e Transparentes
+            Planos para Gestão de Obras
           </h1>
           <p className="text-xl text-slate-300 max-w-2xl mx-auto mb-8">
-            Escolha o plano perfeito para suas necessidades. Sem taxas ocultas, cancele a qualquer momento.
+            Escolha o plano perfeito para gerenciar suas obras e romaneios. Sem taxas ocultas, cancele a qualquer momento.
           </p>
           <div className="flex justify-center gap-4">
             <Button asChild size="lg" className="gap-2">
@@ -260,7 +260,7 @@ export default function PricingPage() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-4xl font-bold mb-6">Comece Agora</h2>
           <p className="text-xl text-blue-100 mb-8">
-            Junte-se a centenas de empresas que já confiam no Romaneio SaaS
+            Junte-se a centenas de empresas que já confiam na Gestão de Obras
           </p>
           <Button asChild size="lg" className="gap-2 bg-white text-blue-600 hover:bg-blue-50">
             <a href={getLoginUrl()}>

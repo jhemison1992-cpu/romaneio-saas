@@ -51,14 +51,14 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Romaneios</h1>
+            <h1 className="text-3xl font-bold text-slate-900">Minhas Obras</h1>
             <p className="text-slate-600 mt-1">
-              Gerencie seus romaneios de carga
+              Gerencie seus romaneios e obras
             </p>
           </div>
           <Button onClick={handleNewRomaneio} className="gap-2">
             <Plus className="h-4 w-4" />
-            Novo Romaneio
+            Nova Obra
           </Button>
         </div>
 
@@ -84,18 +84,18 @@ export default function Dashboard() {
         {/* Romaneios List */}
         <Card>
           <CardHeader>
-            <CardTitle>Meus Romaneios</CardTitle>
+            <CardTitle>Minhas Obras</CardTitle>
             <CardDescription>
-              {romaneios.length} romaneio{romaneios.length !== 1 ? "s" : ""} criado{romaneios.length !== 1 ? "s" : ""}
+              {romaneios.length} obra{romaneios.length !== 1 ? "s" : ""} criada{romaneios.length !== 1 ? "s" : ""}
             </CardDescription>
           </CardHeader>
           <CardContent>
             {romaneios.length === 0 ? (
               <div className="text-center py-12">
                 <FileText className="h-12 w-12 text-slate-300 mx-auto mb-4" />
-                <p className="text-slate-600 mb-4">Nenhum romaneio criado ainda</p>
+                <p className="text-slate-600 mb-4">Nenhuma obra criada ainda</p>
                 <Button onClick={handleNewRomaneio} variant="outline">
-                  Criar Primeiro Romaneio
+                  Criar Primeira Obra
                 </Button>
               </div>
             ) : (

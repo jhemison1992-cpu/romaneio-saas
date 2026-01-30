@@ -55,7 +55,7 @@ export default function PlanSelection() {
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            Escolha seu Plano
+            Escolha seu Plano para Gestão de Obras
           </h1>
           <p className="text-xl text-slate-600">
             Selecione o plano perfeito para suas necessidades de romaneio

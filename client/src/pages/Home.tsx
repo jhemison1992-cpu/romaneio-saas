@@ -34,7 +34,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <FileText className="h-6 w-6 text-blue-400" />
-            <span className="text-xl font-bold">Romaneio SaaS</span>
+            <span className="text-xl font-bold">Gestão de Obras</span>
           </div>
           <Button asChild>
             <a href={getLoginUrl()}>Fazer Login</a>
@@ -47,10 +47,10 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-              Gestão de Romaneios Simplificada
+              Gestão Simplificada de Obras
             </h1>
             <p className="text-xl text-slate-300 mb-8">
-              A plataforma mais elegante e profissional para gerenciar seus romaneios de carga. Crie, organize e exporte documentos com facilidade.
+              A plataforma mais elegante e profissional para gerenciar seus romaneios e obras. Crie, organize e exporte documentos com facilidade.
             </p>
             <div className="flex gap-4">
               <Button asChild size="lg" className="gap-2">

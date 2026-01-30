@@ -149,14 +149,14 @@ export default function RomaneioForm() {
             size="icon"
             onClick={() => navigate("/dashboard")}
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-5 w-5" />
           </Button>
           <div>
             <h1 className="text-3xl font-bold text-slate-900">
-              Novo Romaneio
+              Nova Obra
             </h1>
             <p className="text-slate-600 mt-1">
-              Crie um novo romaneio de carga
+              Crie uma nova obra com romaneio
             </p>
           </div>
         </div>
