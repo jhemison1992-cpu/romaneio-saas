@@ -17,7 +17,8 @@ export const subscriptionRouter = router({
   // Get user's current subscription
   getCurrentSubscription: protectedProcedure.query(async ({ ctx }) => {
     if (!ctx.user) return null;
-    return getUserActiveSubscription(ctx.user.id);
+    const subscription = await getUserActiveSubscription(ctx.user.id);
+    return subscription || null;
   }),
 
   // Create a new subscription for the user
