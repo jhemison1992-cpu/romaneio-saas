@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `users` ADD `companyName` text;\nALTER TABLE `users` ADD `documentNumber` varchar(20);\nALTER TABLE `users` ADD `phone` varchar(20);\nALTER TABLE `users` ADD `address` text;\nALTER TABLE `users` ADD `preferredTemplate` enum('blank','aluminc') DEFAULT 'blank';\nALTER TABLE `users` DROP COLUMN IF EXISTS `subscriptionPlanId`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute ALTER TABLE `users` ADD `companyName` text;\nALTER TABLE `users` ADD `documentNumber` varchar(20);\nALTER TABLE `users` ADD `phone` varchar(20);\nALTER TABLE `users` ADD `address` text;\nALTER TABLE `users` ADD `preferredTemplate` enum('blank','aluminc') DEFAULT 'blank';\nALTER TABLE `users` DROP COLUMN IF EXISTS `subscriptionPlanId`;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 1012
+}

@@ -7,6 +7,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import PlanSelection from "./pages/PlanSelection";
 import PricingPage from "./pages/PricingPage";
+import CompanySetup from "./pages/CompanySetup";
 import Dashboard from "./pages/Dashboard";
 import RomaneioForm from "./pages/RomaneioForm";
 import RomaneioDetail from "./pages/RomaneioDetail";
@@ -20,6 +21,7 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/pricing"} component={PricingPage} />
       <Route path={"/plans"} component={PlanSelection} />
+      <Route path={"/setup"} component={CompanySetup} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/romaneio/new"} component={RomaneioForm} />
       <Route path={"/romaneio/:id"} component={RomaneioDetail} />
