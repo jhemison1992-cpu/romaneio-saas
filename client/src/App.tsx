@@ -6,6 +6,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import PlanSelection from "./pages/PlanSelection";
+import PricingPage from "./pages/PricingPage";
 import Dashboard from "./pages/Dashboard";
 import RomaneioForm from "./pages/RomaneioForm";
 import RomaneioDetail from "./pages/RomaneioDetail";
@@ -17,6 +18,7 @@ function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
+      <Route path={"/pricing"} component={PricingPage} />
       <Route path={"/plans"} component={PlanSelection} />
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/romaneio/new"} component={RomaneioForm} />

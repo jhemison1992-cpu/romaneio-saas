@@ -59,8 +59,8 @@ export default function Home() {
                   <ArrowRight className="h-4 w-4" />
                 </a>
               </Button>
-              <Button size="lg" variant="outline">
-                Ver Demo
+              <Button asChild size="lg" variant="outline">
+                <a href="/pricing">Ver Preços</a>
               </Button>
             </div>
           </div>

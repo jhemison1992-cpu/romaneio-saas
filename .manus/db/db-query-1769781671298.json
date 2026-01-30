@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `users` DROP COLUMN IF EXISTS `subscriptionPlanId`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `companyName`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `documentNumber`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `phone`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `address`;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute ALTER TABLE `users` DROP COLUMN IF EXISTS `subscriptionPlanId`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `companyName`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `documentNumber`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `phone`;\nALTER TABLE `users` DROP COLUMN IF EXISTS `address`;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 6085
+}

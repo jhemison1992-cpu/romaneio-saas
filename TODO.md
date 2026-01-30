@@ -154,3 +154,13 @@
 - Sistema mantém compatibilidade com versão existente
 - Todos os testes passando com sucesso
 - Servidor rodando sem erros
+
+
+## Correções Necessárias
+
+- [ ] Corrigir erro 404 ao acessar páginas
+- [ ] Criar página de planos com preços
+- [ ] Adicionar valores aos planos (Free, Starter, Professional, Enterprise)
+- [ ] Implementar integração Stripe
+- [ ] Criar fluxo de checkout
+- [ ] Adicionar validação de limites por plano

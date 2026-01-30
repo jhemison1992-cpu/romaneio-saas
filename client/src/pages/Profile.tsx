@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import DashboardLayout from "@/components/DashboardLayout";
-import { User, Mail, Phone, MapPin, CreditCard } from "lucide-react";
+import { User, Mail, CreditCard } from "lucide-react";
 import { useLocation } from "wouter";
 
 export default function Profile() {
@@ -52,18 +52,10 @@ export default function Profile() {
                 <Label className="text-xs text-slate-600">Email</Label>
                 <p className="text-sm font-medium mt-2">{user?.email || "Não informado"}</p>
               </div>
-              <div>
-                <Label className="text-xs text-slate-600">Telefone</Label>
-                <p className="text-sm font-medium mt-2">{user?.phone || "Não informado"}</p>
-              </div>
-              <div>
-                <Label className="text-xs text-slate-600">Empresa</Label>
-                <p className="text-sm font-medium mt-2">{user?.companyName || "Não informado"}</p>
-              </div>
             </div>
             <div>
-              <Label className="text-xs text-slate-600">Endereço</Label>
-              <p className="text-sm font-medium mt-2">{user?.address || "Não informado"}</p>
+              <Label className="text-xs text-slate-600">Método de Login</Label>
+              <p className="text-sm font-medium mt-2">{user?.loginMethod || "Não informado"}</p>
             </div>
             <Button variant="outline" className="w-full">
               Editar Perfil
