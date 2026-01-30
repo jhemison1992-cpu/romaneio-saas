@@ -13,6 +13,8 @@ import RomaneioForm from "./pages/RomaneioForm";
 import RomaneioDetail from "./pages/RomaneioDetail";
 import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
+import Inspections from "./pages/Inspections";
+import Users from "./pages/Users";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -23,6 +25,8 @@ function Router() {
       <Route path={"/plans"} component={PlanSelection} />
       <Route path={"/setup"} component={CompanySetup} />
       <Route path={"/dashboard"} component={Dashboard} />
+      <Route path={"/inspections"} component={Inspections} />
+      <Route path={"/users"} component={Users} />
       <Route path={"/romaneio/new"} component={RomaneioForm} />
       <Route path={"/romaneio/:id"} component={RomaneioDetail} />
       <Route path={"/profile"} component={Profile} />

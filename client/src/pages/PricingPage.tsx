@@ -32,8 +32,8 @@ const plans = [
     id: "starter",
     name: "Iniciante",
     description: "Para pequenas operações",
-    price: "R$ 49",
-    period: "/mês",
+    price: "R$ 79,90",
+    period: "/mês ou R$ 958,80/ano",
     icon: <Star className="h-6 w-6 text-amber-500" />,
     features: [
       "Até 50 romaneios por mês",
@@ -56,8 +56,8 @@ const plans = [
     id: "professional",
     name: "Profissional",
     description: "Para operações médias",
-    price: "R$ 149",
-    period: "/mês",
+    price: "R$ 159,80",
+    period: "/mês ou R$ 1.917,60/ano",
     icon: <Crown className="h-6 w-6 text-purple-500" />,
     features: [
       "Romaneios ilimitados",
