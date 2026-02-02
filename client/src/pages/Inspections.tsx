@@ -6,18 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, Edit2, Calendar, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 export default function Inspections() {
   const { isAuthenticated } = useAuth();
@@ -74,12 +66,35 @@ export default function Inspections() {
   };
 
   const handleDelete = async (id: number) => {
+    if (!confirm("Tem certeza que deseja deletar esta vistoria?")) return;
     try {
       await deleteMutation.mutateAsync({ id });
       toast.success("Vistoria deletada com sucesso!");
       refetch();
     } catch (error) {
       toast.error("Erro ao deletar vistoria.");
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "bg-green-100 text-green-800 border-green-300";
+      case "cancelled":
+        return "bg-red-100 text-red-800 border-red-300";
+      default:
+        return "bg-orange-100 text-orange-800 border-orange-300";
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "Concluída";
+      case "cancelled":
+        return "Cancelada";
+      default:
+        return "Em Andamento";
     }
   };
 
@@ -93,7 +108,7 @@ export default function Inspections() {
               Vistorias
             </h1>
             <p className="text-slate-600 mt-1">
-              Gerencie as vistorias das suas obras
+              Gerencie as visitas de liberação de ambientes
             </p>
           </div>
           <Button
@@ -107,7 +122,7 @@ export default function Inspections() {
 
         {/* Form */}
         {showForm && (
-          <Card>
+          <Card className="border-2 border-blue-200 bg-blue-50">
             <CardHeader>
               <CardTitle>Nova Vistoria</CardTitle>
               <CardDescription>
@@ -125,7 +140,7 @@ export default function Inspections() {
                     name="title"
                     value={formData.title}
                     onChange={handleInputChange}
-                    placeholder="Ex: Vistoria de Fundação"
+                    placeholder="Ex: ALUMINC Vistorias de Instalações - Obra DUBAI LM"
                     className="mt-2"
                     required
                   />
@@ -171,7 +186,7 @@ export default function Inspections() {
                     onChange={handleInputChange}
                     placeholder="Descreva os detalhes da vistoria..."
                     className="mt-2"
-                    rows={4}
+                    rows={3}
                   />
                 </div>
 
@@ -192,74 +207,96 @@ export default function Inspections() {
           </Card>
         )}
 
-        {/* List */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Minhas Vistorias</CardTitle>
-            <CardDescription>
-              Lista de todas as vistorias realizadas
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="rounded-lg border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Título</TableHead>
-                    <TableHead>Local</TableHead>
-                    <TableHead>Data</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {isLoading ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                        Carregando...
-                      </TableCell>
-                    </TableRow>
-                  ) : inspections.length === 0 ? (
-                    <TableRow>
-                      <TableCell colSpan={5} className="text-center py-8 text-slate-500">
-                        Nenhuma vistoria criada ainda
-                      </TableCell>
-                    </TableRow>
-                  ) : (
-                    inspections.map((inspection) => (
-                      <TableRow key={inspection.id}>
-                        <TableCell>{inspection.title}</TableCell>
-                        <TableCell>{inspection.location || "-"}</TableCell>
-                        <TableCell>{new Date(inspection.date).toLocaleDateString("pt-BR")}</TableCell>
-                        <TableCell>
-                          <span className={`px-2 py-1 rounded text-sm font-medium ${
-                            inspection.status === "completed" ? "bg-green-100 text-green-700" :
-                            inspection.status === "cancelled" ? "bg-red-100 text-red-700" :
-                            "bg-yellow-100 text-yellow-700"
-                          }`}>
-                            {inspection.status === "completed" ? "Concluída" :
-                             inspection.status === "cancelled" ? "Cancelada" :
-                             "Pendente"}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDelete(inspection.id)}
-                            disabled={deleteMutation.isPending}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                  )}
-                </TableBody>
-              </Table>
+        {/* Cards Grid */}
+        <div className="space-y-4">
+          {isLoading ? (
+            <Card>
+              <CardContent className="pt-6">
+                <p className="text-center text-slate-500">Carregando vistorias...</p>
+              </CardContent>
+            </Card>
+          ) : inspections.length === 0 ? (
+            <Card>
+              <CardContent className="pt-6">
+                <div className="text-center py-12">
+                  <AlertCircle className="h-12 w-12 text-slate-300 mx-auto mb-4" />
+                  <p className="text-slate-500 font-medium">Nenhuma vistoria criada ainda</p>
+                  <p className="text-slate-400 text-sm mt-1">
+                    Crie sua primeira vistoria para começar a acompanhar o progresso
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {inspections.map((inspection) => (
+                <Card key={inspection.id} className="hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg leading-tight">
+                          {inspection.title}
+                        </CardTitle>
+                        <div className="flex items-center gap-1 text-sm text-slate-500 mt-2">
+                          <Calendar className="h-4 w-4" />
+                          {new Date(inspection.date).toLocaleDateString("pt-BR")}
+                        </div>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="space-y-4">
+                    {/* Location */}
+                    {inspection.location && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-600 uppercase">Local</p>
+                        <p className="text-sm text-slate-700">{inspection.location}</p>
+                      </div>
+                    )}
+
+                    {/* Status */}
+                    <div>
+                      <p className="text-xs font-semibold text-slate-600 uppercase">Status</p>
+                      <div className={`inline-block mt-1 px-3 py-1 rounded-full text-sm font-semibold border ${getStatusColor(inspection.status)}`}>
+                        {getStatusLabel(inspection.status)}
+                      </div>
+                    </div>
+
+                    {/* Notes Preview */}
+                    {inspection.notes && (
+                      <div>
+                        <p className="text-xs font-semibold text-slate-600 uppercase">Observações</p>
+                        <p className="text-sm text-slate-600 line-clamp-2">{inspection.notes}</p>
+                      </div>
+                    )}
+
+                    {/* Actions */}
+                    <div className="flex gap-2 pt-2 border-t">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1 gap-2"
+                        onClick={() => navigate(`/inspections/${inspection.id}`)}
+                      >
+                        <Edit2 className="h-4 w-4" />
+                        Abrir Vistoria
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => handleDelete(inspection.id)}
+                        disabled={deleteMutation.isPending}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
-          </CardContent>
-        </Card>
+          )}
+        </div>
       </div>
     </DashboardLayout>
   );

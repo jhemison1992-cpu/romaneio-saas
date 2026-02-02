@@ -167,3 +167,5 @@
 - [x] Tabela de vistorias (inspections) criada
 - [x] Rotas tRPC para vistorias implementadas
 - [x] Página de Vistorias com CRUD funcional
+
+- [ ] Redesenhar página de Vistorias com cards elegantes (modelo Aluminc)
