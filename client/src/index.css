@@ -43,16 +43,16 @@
 }
 
 :root {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-600);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --radius: 0.65rem;
+  --primary: #3B82F6;
+  --primary-foreground: #F0F9FF;
+  --sidebar-primary: #2563EB;
+  --sidebar-primary-foreground: #F0F9FF;
+  --chart-1: #60A5FA;
+  --chart-2: #3B82F6;
+  --chart-3: #2563EB;
+  --chart-4: #1D4ED8;
+  --chart-5: #1E40AF;
+  --radius: 0.75rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.235 0.015 65);
   --card: oklch(1 0 0);
