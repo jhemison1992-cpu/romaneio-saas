@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import AdminDashboard from "./pages/AdminDashboard";
 import Inspections from "./pages/Inspections";
 import Users from "./pages/Users";
+import TemplateSelector from "./pages/TemplateSelector";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -27,6 +28,7 @@ function Router() {
       <Route path={"/dashboard"} component={Dashboard} />
       <Route path={"/inspections"} component={Inspections} />
       <Route path={"/users"} component={Users} />
+      <Route path={"/template-selector"} component={TemplateSelector} />
       <Route path={"/romaneio/new"} component={RomaneioForm} />
       <Route path={"/romaneio/:id"} component={RomaneioDetail} />
       <Route path={"/profile"} component={Profile} />

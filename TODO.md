@@ -156,11 +156,14 @@
 - Servidor rodando sem erros
 
 
-## Correções Necessárias
+## Funcionalidades em Desenvolvimento
 
-- [ ] Corrigir erro 404 ao acessar páginas
-- [ ] Criar página de planos com preços
-- [ ] Adicionar valores aos planos (Free, Starter, Professional, Enterprise)
-- [ ] Implementar integração Stripe
-- [ ] Criar fluxo de checkout
-- [ ] Adicionar validação de limites por plano
+- [ ] Fluxo obrigatório de seleção de plano antes do cadastro
+- [ ] Integrar template Aluminc na criação de romaneios
+- [ ] Implementar geração de PDF para romaneios
+- [ ] Integração com Stripe para pagamentos
+- [ ] Dashboard administrativo funcional
+- [ ] Notificações por email
+- [x] Tabela de vistorias (inspections) criada
+- [x] Rotas tRPC para vistorias implementadas
+- [x] Página de Vistorias com CRUD funcional

@@ -26,7 +26,7 @@ export default function Dashboard() {
   const subscription = subscriptionQuery.data;
 
   const handleNewRomaneio = () => {
-    navigate("/romaneio/new");
+    navigate("/template-selector");
   };
 
   const handleViewRomaneio = (id: number) => {

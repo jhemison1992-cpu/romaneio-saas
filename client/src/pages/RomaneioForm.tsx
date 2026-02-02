@@ -7,9 +7,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DashboardLayout from "@/components/DashboardLayout";
 import { Plus, Trash2, ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
+import { useSearch } from "wouter";
 import {
   Table,
   TableBody,
@@ -20,8 +21,11 @@ import {
 } from "@/components/ui/table";
 
 export default function RomaneioForm() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const [, navigate] = useLocation();
+  const search = useSearch();
+  const template = new URLSearchParams(search).get("template") || "blank";
+
   const [formData, setFormData] = useState({
     title: "",
     remetente: "",
@@ -50,6 +54,16 @@ export default function RomaneioForm() {
   });
 
   const createMutation = trpc.romaneio.create.useMutation();
+
+  useEffect(() => {
+    if (template === "aluminc" && user?.companyName) {
+      setFormData((prev) => ({
+        ...prev,
+        remetente: user.companyName || "",
+        destinatario: "Destinatário - Preencher com dados do cliente",
+      }));
+    }
+  }, [template, user]);
 
   if (!isAuthenticated) {
     navigate("/");
