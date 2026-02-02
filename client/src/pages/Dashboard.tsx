@@ -2,8 +2,12 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Plus, FileText, Download, Trash2 } from "lucide-react";
+import { Plus, FileText, Download, Trash2, MapPin, Building2, Users } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
@@ -12,6 +16,11 @@ export default function Dashboard() {
   const { user, isAuthenticated } = useAuth();
   const [, navigate] = useLocation();
   const [showNewForm, setShowNewForm] = useState(false);
+  const [formData, setFormData] = useState({
+    title: "",
+    remetente: "",
+    destinatario: "",
+  });
 
   // Redirect to login if not authenticated
   if (!isAuthenticated) {
@@ -21,12 +30,40 @@ export default function Dashboard() {
 
   const romaneiosQuery = trpc.romaneio.list.useQuery();
   const subscriptionQuery = trpc.subscription.getCurrentSubscription.useQuery();
+  const createRomaneioMutation = trpc.romaneio.create.useMutation();
 
   const romaneios = romaneiosQuery.data || [];
   const subscription = subscriptionQuery.data;
 
   const handleNewRomaneio = () => {
-    navigate("/template-selector");
+    setShowNewForm(true);
+  };
+
+  const handleCreateRomaneio = async () => {
+    if (!formData.title.trim()) {
+      toast.error("Nome da obra é obrigatório");
+      return;
+    }
+
+    try {
+      await createRomaneioMutation.mutateAsync({
+        title: formData.title,
+        remetente: formData.remetente,
+        destinatario: formData.destinatario,
+        dataEmissao: new Date(),
+      });
+
+      toast.success("Obra criada com sucesso!");
+      setShowNewForm(false);
+      setFormData({
+        title: "",
+        remetente: "",
+        destinatario: "",
+      });
+      romaneiosQuery.refetch();
+    } catch (error) {
+      toast.error("Erro ao criar obra");
+    }
   };
 
   const handleViewRomaneio = (id: number) => {
@@ -56,7 +93,10 @@ export default function Dashboard() {
               Gerencie seus romaneios e obras
             </p>
           </div>
-          <Button onClick={handleNewRomaneio} className="gap-2">
+          <Button 
+            onClick={handleNewRomaneio} 
+            className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+          >
             <Plus className="h-4 w-4" />
             Nova Obra
           </Button>
@@ -99,96 +139,146 @@ export default function Dashboard() {
                 </Button>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-slate-200">
-                      <th className="text-left py-3 px-4 font-semibold text-slate-900">
-                        Título
-                      </th>
-                      <th className="text-left py-3 px-4 font-semibold text-slate-900">
-                        Destinatário
-                      </th>
-                      <th className="text-left py-3 px-4 font-semibold text-slate-900">
-                        Status
-                      </th>
-                      <th className="text-left py-3 px-4 font-semibold text-slate-900">
-                        Data
-                      </th>
-                      <th className="text-right py-3 px-4 font-semibold text-slate-900">
-                        Ações
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {romaneios.map((romaneio: any) => (
-                      <tr
-                        key={romaneio.id}
-                        className="border-b border-slate-100 hover:bg-slate-50 transition-colors"
-                      >
-                        <td className="py-3 px-4 text-slate-900">{romaneio.title}</td>
-                        <td className="py-3 px-4 text-slate-600 truncate">
-                          {romaneio.destinatario}
-                        </td>
-                        <td className="py-3 px-4">
-                          <span
-                            className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              romaneio.status === "draft"
-                                ? "bg-yellow-100 text-yellow-800"
-                                : romaneio.status === "completed"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-gray-100 text-gray-800"
-                            }`}
-                          >
-                            {romaneio.status === "draft"
-                              ? "Rascunho"
-                              : romaneio.status === "completed"
-                                ? "Completo"
-                                : "Arquivado"}
-                          </span>
-                        </td>
-                        <td className="py-3 px-4 text-slate-600 text-sm">
-                          {new Date(romaneio.dataEmissao).toLocaleDateString(
-                            "pt-BR"
-                          )}
-                        </td>
-                        <td className="py-3 px-4 text-right">
-                          <div className="flex items-center justify-end gap-2">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleViewRomaneio(romaneio.id)}
-                            >
-                              <FileText className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => {
-                                // TODO: Implement PDF download
-                                toast.info("Download em desenvolvimento");
-                              }}
-                            >
-                              <Download className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => handleDeleteRomaneio(romaneio.id)}
-                            >
-                              <Trash2 className="h-4 w-4 text-red-600" />
-                            </Button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {romaneios.map((romaneio) => (
+                  <div
+                    key={romaneio.id}
+                    className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-slate-100 hover:border-blue-200"
+                  >
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-900 mb-2 line-clamp-2">
+                          {romaneio.title}
+                        </h3>
+                        <p className="text-xs text-slate-500">
+                          {new Date(romaneio.dataEmissao).toLocaleDateString('pt-BR')}
+                        </p>
+                      </div>
+
+                      {romaneio.remetente && (
+                        <div className="flex items-start gap-2 text-sm text-slate-600">
+                          <Building2 className="h-4 w-4 mt-0.5 flex-shrink-0 text-indigo-600" />
+                          <span className="line-clamp-1">Remetente: {romaneio.remetente}</span>
+                        </div>
+                      )}
+
+                      {romaneio.destinatario && (
+                        <div className="flex items-start gap-2 text-sm text-slate-600">
+                          <Users className="h-4 w-4 mt-0.5 flex-shrink-0 text-purple-600" />
+                          <span className="line-clamp-1">Destinatário: {romaneio.destinatario}</span>
+                        </div>
+                      )}
+
+                      <div className="flex gap-2 pt-4 border-t border-slate-100">
+                        <Button
+                          onClick={() => handleViewRomaneio(romaneio.id)}
+                          variant="outline"
+                          size="sm"
+                          className="flex-1"
+                        >
+                          <FileText className="h-4 w-4 mr-2" />
+                          Abrir
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                        >
+                          <Download className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                          onClick={() => handleDeleteRomaneio(romaneio.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </CardContent>
         </Card>
       </div>
+
+      {/* Modal de Criar Nova Obra */}
+      <Dialog open={showNewForm} onOpenChange={setShowNewForm}>
+        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl">Criar Nova Obra</DialogTitle>
+            <DialogDescription>
+              Preencha os dados da obra para começar a criar romaneios
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {/* Nome da Obra */}
+            <div className="space-y-2">
+              <Label htmlFor="title" className="text-base font-semibold">
+                Nome da Obra *
+              </Label>
+              <Input
+                id="title"
+                placeholder="Ex: DUBAI LM"
+                value={formData.title}
+                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Remetente */}
+            <div className="space-y-2">
+              <Label htmlFor="remetente" className="text-base font-semibold">
+                Remetente
+              </Label>
+              <Textarea
+                id="remetente"
+                placeholder="Ex: ALUMINC Esquadrias Metálicas Indústria e Comércio Ltda."
+                value={formData.remetente}
+                onChange={(e) => setFormData({ ...formData, remetente: e.target.value })}
+                rows={2}
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Destinatário */}
+            <div className="space-y-2">
+              <Label htmlFor="destinatario" className="text-base font-semibold">
+                Destinatário
+              </Label>
+              <Textarea
+                id="destinatario"
+                placeholder="Ex: DUBAI LM EMPREENDIMENTOS IMOBILIÁRIOS SPE LTDA"
+                value={formData.destinatario}
+                onChange={(e) => setFormData({ ...formData, destinatario: e.target.value })}
+                rows={2}
+                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+              />
+            </div>
+
+            {/* Botões */}
+            <div className="flex gap-3 pt-6">
+              <Button
+                variant="outline"
+                onClick={() => setShowNewForm(false)}
+                className="flex-1"
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleCreateRomaneio}
+                disabled={createRomaneioMutation.isPending}
+                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+              >
+                {createRomaneioMutation.isPending ? "Criando..." : "Criar Obra"}
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </DashboardLayout>
   );
 }
