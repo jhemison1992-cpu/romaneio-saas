@@ -2,12 +2,15 @@ import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Plus, FileText, Download, Trash2, MapPin, Building2, Users } from "lucide-react";
+import { Plus, FileText, Download, Trash2, Building2, Users, X } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
@@ -16,8 +19,18 @@ export default function Dashboard() {
   const { user, isAuthenticated } = useAuth();
   const [, navigate] = useLocation();
   const [showNewForm, setShowNewForm] = useState(false);
+  const [cadastroType, setCadastroType] = useState("completo");
   const [formData, setFormData] = useState({
     title: "",
+    responsavel: "",
+    tipoContrato: "contratante",
+    contratante: "",
+    dataInicio: "",
+    previsaoTermino: "",
+    numeroContrato: "",
+    status: "em-andamento",
+    endereco: "",
+    listaTarefas: false,
     remetente: "",
     destinatario: "",
   });
@@ -37,6 +50,21 @@ export default function Dashboard() {
 
   const handleNewRomaneio = () => {
     setShowNewForm(true);
+    setCadastroType("completo");
+    setFormData({
+      title: "",
+      responsavel: "",
+      tipoContrato: "contratante",
+      contratante: "",
+      dataInicio: "",
+      previsaoTermino: "",
+      numeroContrato: "",
+      status: "em-andamento",
+      endereco: "",
+      listaTarefas: false,
+      remetente: "",
+      destinatario: "",
+    });
   };
 
   const handleCreateRomaneio = async () => {
@@ -48,8 +76,8 @@ export default function Dashboard() {
     try {
       await createRomaneioMutation.mutateAsync({
         title: formData.title,
-        remetente: formData.remetente,
-        destinatario: formData.destinatario,
+        remetente: formData.responsavel || formData.remetente,
+        destinatario: formData.contratante || formData.destinatario,
         dataEmissao: new Date(),
       });
 
@@ -57,6 +85,15 @@ export default function Dashboard() {
       setShowNewForm(false);
       setFormData({
         title: "",
+        responsavel: "",
+        tipoContrato: "contratante",
+        contratante: "",
+        dataInicio: "",
+        previsaoTermino: "",
+        numeroContrato: "",
+        status: "em-andamento",
+        endereco: "",
+        listaTarefas: false,
         remetente: "",
         destinatario: "",
       });
@@ -206,76 +243,248 @@ export default function Dashboard() {
 
       {/* Modal de Criar Nova Obra */}
       <Dialog open={showNewForm} onOpenChange={setShowNewForm}>
-        <DialogContent className="sm:max-w-md max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">Criar Nova Obra</DialogTitle>
-            <DialogDescription>
-              Preencha os dados da obra para começar a criar romaneios
-            </DialogDescription>
+        <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="flex flex-row items-center justify-between">
+            <DialogTitle className="text-2xl text-orange-600">Adicionar obra</DialogTitle>
+            <button
+              onClick={() => setShowNewForm(false)}
+              className="text-slate-400 hover:text-slate-600"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </DialogHeader>
 
-          <div className="space-y-4">
-            {/* Nome da Obra */}
-            <div className="space-y-2">
-              <Label htmlFor="title" className="text-base font-semibold">
-                Nome da Obra *
-              </Label>
-              <Input
-                id="title"
-                placeholder="Ex: DUBAI LM"
-                value={formData.title}
-                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+          {/* Tabs para Cadastro Completo e Simples */}
+          <Tabs value={cadastroType} onValueChange={setCadastroType} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-6">
+              <TabsTrigger value="completo" className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded-full border-2 border-current" />
+                Cadastro completo
+              </TabsTrigger>
+              <TabsTrigger value="simples" className="flex items-center gap-2">
+                <div className="h-4 w-4 rounded-full border-2 border-current" />
+                Cadastro simples
+              </TabsTrigger>
+            </TabsList>
 
-            {/* Remetente */}
-            <div className="space-y-2">
-              <Label htmlFor="remetente" className="text-base font-semibold">
-                Remetente
-              </Label>
-              <Textarea
-                id="remetente"
-                placeholder="Ex: ALUMINC Esquadrias Metálicas Indústria e Comércio Ltda."
-                value={formData.remetente}
-                onChange={(e) => setFormData({ ...formData, remetente: e.target.value })}
-                rows={2}
-                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+            {/* Cadastro Completo */}
+            <TabsContent value="completo" className="space-y-4">
+              {/* Nome da Obra */}
+              <div className="space-y-2">
+                <Label htmlFor="title" className="text-sm font-semibold">
+                  Nome *
+                </Label>
+                <Input
+                  id="title"
+                  placeholder="Ex: Shopping Santa Luzia"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
 
-            {/* Destinatário */}
-            <div className="space-y-2">
-              <Label htmlFor="destinatario" className="text-base font-semibold">
-                Destinatário
-              </Label>
-              <Textarea
-                id="destinatario"
-                placeholder="Ex: DUBAI LM EMPREENDIMENTOS IMOBILIÁRIOS SPE LTDA"
-                value={formData.destinatario}
-                onChange={(e) => setFormData({ ...formData, destinatario: e.target.value })}
-                rows={2}
-                className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
-              />
-            </div>
+              {/* Responsável e Tipo de Contrato */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="responsavel" className="text-sm font-semibold">
+                    Responsável
+                  </Label>
+                  <Input
+                    id="responsavel"
+                    placeholder="Ex: Eng. Carlos Silva"
+                    value={formData.responsavel}
+                    onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
+                    className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
 
-            {/* Botões */}
-            <div className="flex gap-3 pt-6">
-              <Button
-                variant="outline"
-                onClick={() => setShowNewForm(false)}
-                className="flex-1"
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={handleCreateRomaneio}
-                disabled={createRomaneioMutation.isPending}
-                className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-              >
-                {createRomaneioMutation.isPending ? "Criando..." : "Criar Obra"}
-              </Button>
-            </div>
+                <div className="space-y-2">
+                  <Label htmlFor="tipoContrato" className="text-sm font-semibold">
+                    Tipo de contrato
+                  </Label>
+                  <Select value={formData.tipoContrato} onValueChange={(value) => setFormData({ ...formData, tipoContrato: value })}>
+                    <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="contratante">Contratante</SelectItem>
+                      <SelectItem value="fornecedor">Fornecedor</SelectItem>
+                      <SelectItem value="empreitada">Empreitada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Contratante */}
+              <div className="space-y-2">
+                <Label htmlFor="contratante" className="text-sm font-semibold">
+                  Contratante
+                </Label>
+                <Input
+                  id="contratante"
+                  placeholder="Ex: Prefeitura"
+                  value={formData.contratante}
+                  onChange={(e) => setFormData({ ...formData, contratante: e.target.value })}
+                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Data Início e Previsão de Término */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="dataInicio" className="text-sm font-semibold">
+                    Data início *
+                  </Label>
+                  <Input
+                    id="dataInicio"
+                    type="date"
+                    value={formData.dataInicio}
+                    onChange={(e) => setFormData({ ...formData, dataInicio: e.target.value })}
+                    className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="previsaoTermino" className="text-sm font-semibold">
+                    Previsão de término *
+                  </Label>
+                  <Input
+                    id="previsaoTermino"
+                    type="date"
+                    value={formData.previsaoTermino}
+                    onChange={(e) => setFormData({ ...formData, previsaoTermino: e.target.value })}
+                    className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Nº do Contrato e Status */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="numeroContrato" className="text-sm font-semibold">
+                    Nº do contrato
+                  </Label>
+                  <Input
+                    id="numeroContrato"
+                    placeholder="Ex: 2024/001"
+                    value={formData.numeroContrato}
+                    onChange={(e) => setFormData({ ...formData, numeroContrato: e.target.value })}
+                    className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="status" className="text-sm font-semibold">
+                    Status
+                  </Label>
+                  <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
+                    <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="em-andamento">Em andamento</SelectItem>
+                      <SelectItem value="concluida">Concluída</SelectItem>
+                      <SelectItem value="pausada">Pausada</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Endereço */}
+              <div className="space-y-2">
+                <Label htmlFor="endereco" className="text-sm font-semibold">
+                  Endereço
+                </Label>
+                <Input
+                  id="endereco"
+                  placeholder="Ex: Av. ABC, 100, Centro"
+                  value={formData.endereco}
+                  onChange={(e) => setFormData({ ...formData, endereco: e.target.value })}
+                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Configurações */}
+              <div className="space-y-3 pt-2 border-t border-slate-200">
+                <p className="text-sm font-semibold text-slate-900">Configurações</p>
+                <div className="flex items-center gap-3">
+                  <Checkbox
+                    id="listaTarefas"
+                    checked={formData.listaTarefas}
+                    onCheckedChange={(checked) => setFormData({ ...formData, listaTarefas: checked as boolean })}
+                  />
+                  <Label htmlFor="listaTarefas" className="text-sm font-normal cursor-pointer">
+                    Lista de tarefas
+                  </Label>
+                </div>
+              </div>
+            </TabsContent>
+
+            {/* Cadastro Simples */}
+            <TabsContent value="simples" className="space-y-4">
+              {/* Nome da Obra */}
+              <div className="space-y-2">
+                <Label htmlFor="titleSimples" className="text-sm font-semibold">
+                  Nome *
+                </Label>
+                <Input
+                  id="titleSimples"
+                  placeholder="Ex: Shopping Santa Luzia"
+                  value={formData.title}
+                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Responsável */}
+              <div className="space-y-2">
+                <Label htmlFor="responsavelSimples" className="text-sm font-semibold">
+                  Responsável
+                </Label>
+                <Input
+                  id="responsavelSimples"
+                  placeholder="Ex: Eng. Carlos Silva"
+                  value={formData.responsavel}
+                  onChange={(e) => setFormData({ ...formData, responsavel: e.target.value })}
+                  className="border-slate-300 focus:border-blue-500 focus:ring-blue-500"
+                />
+              </div>
+
+              {/* Status */}
+              <div className="space-y-2">
+                <Label htmlFor="statusSimples" className="text-sm font-semibold">
+                  Status
+                </Label>
+                <Select value={formData.status} onValueChange={(value) => setFormData({ ...formData, status: value })}>
+                  <SelectTrigger className="border-slate-300 focus:border-blue-500 focus:ring-blue-500">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="em-andamento">Em andamento</SelectItem>
+                    <SelectItem value="concluida">Concluída</SelectItem>
+                    <SelectItem value="pausada">Pausada</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </TabsContent>
+          </Tabs>
+
+          {/* Botões de Ação */}
+          <div className="flex gap-3 justify-end pt-6 border-t border-slate-200">
+            <Button
+              variant="outline"
+              onClick={() => setShowNewForm(false)}
+              className="px-6"
+            >
+              Fechar
+            </Button>
+            <Button
+              onClick={handleCreateRomaneio}
+              disabled={createRomaneioMutation.isPending}
+              className="px-6 bg-green-600 hover:bg-green-700 text-white"
+            >
+              {createRomaneioMutation.isPending ? "Salvando..." : "Salvar"}
+            </Button>
           </div>
         </DialogContent>
       </Dialog>

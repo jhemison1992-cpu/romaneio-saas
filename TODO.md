@@ -170,6 +170,9 @@
 
 - [x] Redesenhar página de Vistorias com cards elegantes (modelo Aluminc)
 - [x] Modal elegante para criar obras
+- [x] Redesenhar modal de cadastro de obra com abas (Completo/Simples)
+- [x] Adicionar campos profissionais (Responsável, Tipo de contrato, Status, etc)
+- [x] Implementar Cadastro Simples com menos campos
 - [ ] Integração Stripe para pagamento dos planos
 - [ ] Geração de PDF para romaneios
 - [ ] Fluxo obrigatório de seleção de plano
