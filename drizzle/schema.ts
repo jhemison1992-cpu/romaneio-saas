@@ -17,6 +17,7 @@ export const users = mysqlTable("users", {
   phone: varchar("phone", { length: 20 }),
   address: text("address"),
   preferredTemplate: mysqlEnum("preferredTemplate", ["blank", "aluminc"]).default("blank"),
+  stripeCustomerId: varchar("stripeCustomerId", { length: 255 }),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
@@ -34,6 +35,7 @@ export const subscriptionPlans = mysqlTable("subscriptionPlans", {
   slug: varchar("slug", { length: 50 }).notNull().unique(),
   description: text("description"),
   monthlyPrice: decimal("monthlyPrice", { precision: 10, scale: 2 }).notNull(),
+  stripePriceId: varchar("stripePriceId", { length: 255 }),
   features: json("features").$type<string[]>().notNull(),
   maxRomaneios: int("maxRomaneios").notNull().default(10),
   maxUsers: int("maxUsers").notNull().default(1),
@@ -155,3 +157,22 @@ export const auditLogs = mysqlTable("auditLogs", {
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type InsertAuditLog = typeof auditLogs.$inferInsert;
+
+/**
+ * Stripe subscription records
+ */
+export const stripeSubscriptions = mysqlTable("stripeSubscriptions", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 255 }).notNull().unique(),
+  stripePriceId: varchar("stripePriceId", { length: 255 }).notNull(),
+  status: varchar("status", { length: 50 }).notNull(),
+  currentPeriodStart: timestamp("currentPeriodStart"),
+  currentPeriodEnd: timestamp("currentPeriodEnd"),
+  canceledAt: timestamp("canceledAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type StripeSubscription = typeof stripeSubscriptions.$inferSelect;
+export type InsertStripeSubscription = typeof stripeSubscriptions.$inferInsert;

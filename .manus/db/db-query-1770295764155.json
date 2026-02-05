@@ -1,0 +1,9 @@
+{
+  "query": "CREATE TABLE `stripeSubscriptions` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`stripeSubscriptionId` varchar(255) NOT NULL,\n\t`stripePriceId` varchar(255) NOT NULL,\n\t`status` varchar(50) NOT NULL,\n\t`currentPeriodStart` timestamp,\n\t`currentPeriodEnd` timestamp,\n\t`canceledAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `stripeSubscriptions_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `stripeSubscriptions_stripeSubscriptionId_unique` UNIQUE(`stripeSubscriptionId`)\n);\nALTER TABLE `subscriptionPlans` ADD `stripePriceId` varchar(255);\nALTER TABLE `users` ADD `stripeCustomerId` varchar(255);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute CREATE TABLE `stripeSubscriptions` (\n\t`id` int AUTO_INCREMENT NOT NULL,\n\t`userId` int NOT NULL,\n\t`stripeSubscriptionId` varchar(255) NOT NULL,\n\t`stripePriceId` varchar(255) NOT NULL,\n\t`status` varchar(50) NOT NULL,\n\t`currentPeriodStart` timestamp,\n\t`currentPeriodEnd` timestamp,\n\t`canceledAt` timestamp,\n\t`createdAt` timestamp NOT NULL DEFAULT (now()),\n\t`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,\n\tCONSTRAINT `stripeSubscriptions_id` PRIMARY KEY(`id`),\n\tCONSTRAINT `stripeSubscriptions_stripeSubscriptionId_unique` UNIQUE(`stripeSubscriptionId`)\n);\nALTER TABLE `subscriptionPlans` ADD `stripePriceId` varchar(255);\nALTER TABLE `users` ADD `stripeCustomerId` varchar(255);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 531
+}

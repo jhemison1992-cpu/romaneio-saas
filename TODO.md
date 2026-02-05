@@ -168,4 +168,9 @@
 - [x] Rotas tRPC para vistorias implementadas
 - [x] Página de Vistorias com CRUD funcional
 
-- [ ] Redesenhar página de Vistorias com cards elegantes (modelo Aluminc)
+- [x] Redesenhar página de Vistorias com cards elegantes (modelo Aluminc)
+- [x] Modal elegante para criar obras
+- [ ] Integração Stripe para pagamento dos planos
+- [ ] Geração de PDF para romaneios
+- [ ] Fluxo obrigatório de seleção de plano
+- [ ] Dashboard administrativo completo
