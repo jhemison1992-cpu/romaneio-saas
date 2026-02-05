@@ -6,9 +6,7 @@ import { getDb } from "../db";
 import { eq } from "drizzle-orm";
 import { users, stripeSubscriptions } from "../../drizzle/schema";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2024-12-18",
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 
 export const stripeRouter = router({
   /**
