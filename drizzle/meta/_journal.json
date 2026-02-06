@@ -43,6 +43,13 @@
       "when": 1770373216495,
       "tag": "0005_hot_hedge_knight",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1770374214025,
+      "tag": "0006_aromatic_sheva_callister",
+      "breakpoints": true
     }
   ]
 }

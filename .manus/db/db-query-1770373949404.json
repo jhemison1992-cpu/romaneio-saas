@@ -1,0 +1,13 @@
+{
+  "query": "SELECT id FROM users WHERE openId = 'test-user-001' LIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute SELECT id FROM users WHERE openId = 'test-user-001' LIMIT 1;",
+  "rows": [
+    {
+      "id": "390042"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\n390042\n",
+  "stderr": "",
+  "execution_time_ms": 369
+}

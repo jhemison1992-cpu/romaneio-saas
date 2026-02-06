@@ -1,0 +1,30 @@
+{
+  "query": "SELECT 'USUÁRIOS' as tipo, COUNT(*) as quantidade FROM users WHERE openId = 'test-user-001'\nUNION ALL\nSELECT 'EMPRESAS', COUNT(*) FROM companies WHERE ownerId = 1\nUNION ALL\nSELECT 'OBRAS', COUNT(*) FROM romaneios WHERE userId = 1\nUNION ALL\nSELECT 'VISTORIAS', COUNT(*) FROM inspections WHERE userId = 1\nUNION ALL\nSELECT 'TERMOS DE ENTREGA', COUNT(*) FROM deliveryTerms WHERE userId = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute SELECT 'USUÁRIOS' as tipo, COUNT(*) as quantidade FROM users WHERE openId = 'test-user-001'\nUNION ALL\nSELECT 'EMPRESAS', COUNT(*) FROM companies WHERE ownerId = 1\nUNION ALL\nSELECT 'OBRAS', COUNT(*) FROM romaneios WHERE userId = 1\nUNION ALL\nSELECT 'VISTORIAS', COUNT(*) FROM inspections WHERE userId = 1\nUNION ALL\nSELECT 'TERMOS DE ENTREGA', COUNT(*) FROM deliveryTerms WHERE userId = 1;",
+  "rows": [
+    {
+      "tipo": "VISTORIAS",
+      "quantidade": "1"
+    },
+    {
+      "tipo": "EMPRESAS",
+      "quantidade": "1"
+    },
+    {
+      "tipo": "TERMOS DE ENTREGA",
+      "quantidade": "1"
+    },
+    {
+      "tipo": "USUÁRIOS",
+      "quantidade": "1"
+    },
+    {
+      "tipo": "OBRAS",
+      "quantidade": "1"
+    }
+  ],
+  "messages": [],
+  "stdout": "tipo\tquantidade\nVISTORIAS\t1\nEMPRESAS\t1\nTERMOS DE ENTREGA\t1\nUSUÁRIOS\t1\nOBRAS\t1\n",
+  "stderr": "",
+  "execution_time_ms": 370
+}

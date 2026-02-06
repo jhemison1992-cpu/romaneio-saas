@@ -1,0 +1,23 @@
+{
+  "query": "SELECT u.id as user_id, u.name, u.email, c.id as company_id, c.name as company_name, r.id as romaneio_id, r.title as romaneio_title, i.id as inspection_id, i.title as inspection_title, dt.id as term_id, dt.protocolNumber\nFROM users u\nLEFT JOIN companies c ON c.ownerId = u.id\nLEFT JOIN romaneios r ON r.userId = u.id\nLEFT JOIN inspections i ON i.userId = u.id\nLEFT JOIN deliveryTerms dt ON dt.userId = u.id\nWHERE u.openId = 'test-user-001'\nLIMIT 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute SELECT u.id as user_id, u.name, u.email, c.id as company_id, c.name as company_name, r.id as romaneio_id, r.title as romaneio_title, i.id as inspection_id, i.title as inspection_title, dt.id as term_id, dt.protocolNumber\nFROM users u\nLEFT JOIN companies c ON c.ownerId = u.id\nLEFT JOIN romaneios r ON r.userId = u.id\nLEFT JOIN inspections i ON i.userId = u.id\nLEFT JOIN deliveryTerms dt ON dt.userId = u.id\nWHERE u.openId = 'test-user-001'\nLIMIT 1;",
+  "rows": [
+    {
+      "user_id": "390042",
+      "name": "João Silva Teste",
+      "email": "joao@teste.com",
+      "company_id": "NULL",
+      "company_name": "NULL",
+      "romaneio_id": "NULL",
+      "romaneio_title": "NULL",
+      "inspection_id": "NULL",
+      "inspection_title": "NULL",
+      "term_id": "NULL",
+      "protocolNumber": "NULL"
+    }
+  ],
+  "messages": [],
+  "stdout": "user_id\tname\temail\tcompany_id\tcompany_name\tromaneio_id\tromaneio_title\tinspection_id\tinspection_title\tterm_id\tprotocolNumber\n390042\tJoão Silva Teste\tjoao@teste.com\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\tNULL\n",
+  "stderr": "",
+  "execution_time_ms": 358
+}

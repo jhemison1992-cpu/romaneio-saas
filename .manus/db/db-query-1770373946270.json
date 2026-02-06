@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO users (openId, name, email, loginMethod, role, companyName, documentNumber, phone, address, preferredTemplate, createdAt, updatedAt, lastSignedIn) \nVALUES ('test-user-001', 'João Silva Teste', 'joao@teste.com', 'oauth', 'user', 'ALUMINC Teste', '12345678000190', '11987654321', 'Rua Teste, 123', 'blank', NOW(), NOW(), NOW())\nON DUPLICATE KEY UPDATE id=id;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute INSERT INTO users (openId, name, email, loginMethod, role, companyName, documentNumber, phone, address, preferredTemplate, createdAt, updatedAt, lastSignedIn) \nVALUES ('test-user-001', 'João Silva Teste', 'joao@teste.com', 'oauth', 'user', 'ALUMINC Teste', '12345678000190', '11987654321', 'Rua Teste, 123', 'blank', NOW(), NOW(), NOW())\nON DUPLICATE KEY UPDATE id=id;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 375
+}

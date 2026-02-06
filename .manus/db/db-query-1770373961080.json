@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO inspections (userId, companyId, title, location, date, status, notes, createdAt, updatedAt)\nVALUES (1, 1, 'Vistoria de Conclusão - Obra Teste', 'Bloco A - Pavimento 5', NOW(), 'completed', 'Vistoria teste para validar termo de entrega', NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute INSERT INTO inspections (userId, companyId, title, location, date, status, notes, createdAt, updatedAt)\nVALUES (1, 1, 'Vistoria de Conclusão - Obra Teste', 'Bloco A - Pavimento 5', NOW(), 'completed', 'Vistoria teste para validar termo de entrega', NOW(), NOW());",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 367
+}

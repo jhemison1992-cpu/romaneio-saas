@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import DashboardLayout from "@/components/DashboardLayout";
-import { ArrowLeft, Download, Printer } from "lucide-react";
+import { ArrowLeft, Download, Printer, Edit2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation, useParams } from "wouter";
@@ -120,8 +120,8 @@ export default function RomaneioDetail() {
           </div>
         </div>
 
-        {/* Info Card */}
-        <Card>
+        {/* Info Card - Informações do Romaneio */}
+        <Card className="border-l-4 border-l-blue-500">
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
               <CardTitle>Informações do Romaneio</CardTitle>
@@ -132,19 +132,21 @@ export default function RomaneioDetail() {
             <Button
               variant="outline"
               size="sm"
+              className="gap-2"
               onClick={() => setIsEditing(!isEditing)}
             >
+              <Edit2 className="h-4 w-4" />
               {isEditing ? "Cancelar" : "Editar"}
             </Button>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <Label className="text-xs text-slate-600">Título</Label>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Título</Label>
                 <p className="text-sm font-medium mt-1">{romaneio.title}</p>
               </div>
               <div>
-                <Label className="text-xs text-slate-600">Data de Emissão</Label>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Data de Emissão</Label>
                 <p className="text-sm font-medium mt-1">
                   {new Date(romaneio.dataEmissao).toLocaleDateString("pt-BR")}
                 </p>
@@ -152,14 +154,14 @@ export default function RomaneioDetail() {
             </div>
 
             <div>
-              <Label className="text-xs text-slate-600">Remetente</Label>
+              <Label className="text-xs font-semibold text-slate-600 uppercase">Remetente</Label>
               <p className="text-sm font-medium mt-1 whitespace-pre-wrap">
                 {romaneio.remetente}
               </p>
             </div>
 
             <div>
-              <Label className="text-xs text-slate-600">Destinatário</Label>
+              <Label className="text-xs font-semibold text-slate-600 uppercase">Destinatário</Label>
               <p className="text-sm font-medium mt-1 whitespace-pre-wrap">
                 {romaneio.destinatario}
               </p>
@@ -167,35 +169,93 @@ export default function RomaneioDetail() {
 
             {romaneio.observacoes && (
               <div>
-                <Label className="text-xs text-slate-600">Observações</Label>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Observações</Label>
                 <p className="text-sm font-medium mt-1 whitespace-pre-wrap">
                   {romaneio.observacoes}
                 </p>
               </div>
             )}
+          </CardContent>
+        </Card>
 
-            {isEditing && (
-              <div className="pt-4 border-t space-y-4">
-                <div>
-                  <Label htmlFor="title">Título</Label>
-                  <Input
-                    id="title"
-                    value={romaneio.title}
-                    onChange={(e) => {
-                      // Update logic would go here
-                    }}
-                  />
-                </div>
-                <div className="flex gap-2">
-                  <Button onClick={handleSave} disabled={updateMutation.isPending}>
-                    Salvar
-                  </Button>
-                  <Button variant="outline" onClick={() => setIsEditing(false)}>
-                    Cancelar
-                  </Button>
-                </div>
+        {/* Detalhes da Obra */}
+        <Card className="border-l-4 border-l-orange-500">
+          <CardHeader>
+            <CardTitle>Detalhes da Obra</CardTitle>
+            <CardDescription>
+              Informações completas do projeto
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Responsável */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Responsável Técnico</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.responsavel || "Não informado"}
+                </p>
               </div>
-            )}
+
+              {/* Tipo de Contrato */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Tipo de Contrato</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.tipoContrato || "Não informado"}
+                </p>
+              </div>
+
+              {/* Contratante */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Contratante</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.contratante || "Não informado"}
+                </p>
+              </div>
+
+              {/* Número do Contrato */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Número do Contrato</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.numeroContrato || "Não informado"}
+                </p>
+              </div>
+
+              {/* Data de Início */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Data de Início</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.dataInicio 
+                    ? new Date(romaneio.dataInicio).toLocaleDateString("pt-BR")
+                    : "Não informado"}
+                </p>
+              </div>
+
+              {/* Previsão de Término */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Previsão de Término</Label>
+                <p className="text-sm font-medium mt-1">
+                  {romaneio.previsaoTermino
+                    ? new Date(romaneio.previsaoTermino).toLocaleDateString("pt-BR")
+                    : "Não informado"}
+                </p>
+              </div>
+
+              {/* Valor */}
+              <div>
+                <Label className="text-xs font-semibold text-slate-600 uppercase">Valor do Contrato</Label>
+                <p className="text-sm font-medium mt-1 text-green-600">
+                  {romaneio.valor ? `R$ ${parseFloat(romaneio.valor as any).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}` : "Não informado"}
+                </p>
+              </div>
+            </div>
+
+            {/* Endereço - Full Width */}
+            <div>
+              <Label className="text-xs font-semibold text-slate-600 uppercase">Endereço da Obra</Label>
+              <p className="text-sm font-medium mt-1">
+                {romaneio.endereco || "Não informado"}
+              </p>
+            </div>
           </CardContent>
         </Card>
 

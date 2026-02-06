@@ -1,0 +1,9 @@
+{
+  "query": "ALTER TABLE `romaneios` ADD `responsavel` varchar(255);\nALTER TABLE `romaneios` ADD `tipoContrato` varchar(100);\nALTER TABLE `romaneios` ADD `contratante` text;\nALTER TABLE `romaneios` ADD `dataInicio` timestamp;\nALTER TABLE `romaneios` ADD `previsaoTermino` timestamp;\nALTER TABLE `romaneios` ADD `numeroContrato` varchar(50);\nALTER TABLE `romaneios` ADD `endereco` text;\nALTER TABLE `romaneios` ADD `valor` decimal(12,2);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute ALTER TABLE `romaneios` ADD `responsavel` varchar(255);\nALTER TABLE `romaneios` ADD `tipoContrato` varchar(100);\nALTER TABLE `romaneios` ADD `contratante` text;\nALTER TABLE `romaneios` ADD `dataInicio` timestamp;\nALTER TABLE `romaneios` ADD `previsaoTermino` timestamp;\nALTER TABLE `romaneios` ADD `numeroContrato` varchar(50);\nALTER TABLE `romaneios` ADD `endereco` text;\nALTER TABLE `romaneios` ADD `valor` decimal(12,2);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 2458
+}

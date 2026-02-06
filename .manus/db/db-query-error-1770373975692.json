@@ -1,0 +1,8 @@
+{
+  "query": "INSERT INTO deliveryTerms (inspectionId, userId, protocolNumber, completionDate, responsibleTechnician, status, createdAt, updatedAt)\nVALUES (1, 1, CONCAT('TERMO-', UNIX_TIMESTAMP(NOW()), '-', FLOOR(RAND()*10000)), NOW(), 'Eng. Carlos Santos', 'draft', NOW(), NOW());",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute INSERT INTO deliveryTerms (inspectionId, userId, protocolNumber, completionDate, responsibleTechnician, status, createdAt, updatedAt)\nVALUES (1, 1, CONCAT('TERMO-', UNIX_TIMESTAMP(NOW()), '-', FLOOR(RAND()*10000)), NOW(), 'Eng. Carlos Santos', 'draft', NOW(), NOW());",
+  "returncode": 1,
+  "logs": [
+    "ERROR 1364 (HY000) at line 1: Field 'deliveryDescription' doesn't have a default value"
+  ]
+}

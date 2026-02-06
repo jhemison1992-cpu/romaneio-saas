@@ -86,3 +86,10 @@
 - [ ] Otimização de performance
 - [ ] Configuração de CDN para assets
 - [ ] Backup e recuperação de dados
+
+## Obras - Campos Detalhados
+- [x] Novos campos adicionados ao schema: responsavel, tipoContrato, contratante, dataInicio, previsaoTermino, numeroContrato, endereco, valor
+- [x] Migration SQL executada com sucesso
+- [x] Página RomaneioDetail atualizada para exibir todos os campos
+- [x] Card "Detalhes da Obra" com layout profissional
+- [x] Dados de teste preenchidos com informações realistas

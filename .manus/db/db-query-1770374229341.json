@@ -1,0 +1,9 @@
+{
+  "query": "UPDATE romaneios \nSET \n  responsavel = 'Eng. João da Silva',\n  tipoContrato = 'Empreitada por Preço Global',\n  contratante = 'Construtora ABC Ltda',\n  dataInicio = '2026-01-15',\n  previsaoTermino = '2026-06-30',\n  numeroContrato = 'CT-2026-001234',\n  endereco = 'Av. Paulista, 1000 - Bloco A - São Paulo, SP - CEP 01311-100',\n  valor = 150000.00\nWHERE id = 1;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute UPDATE romaneios \nSET \n  responsavel = 'Eng. João da Silva',\n  tipoContrato = 'Empreitada por Preço Global',\n  contratante = 'Construtora ABC Ltda',\n  dataInicio = '2026-01-15',\n  previsaoTermino = '2026-06-30',\n  numeroContrato = 'CT-2026-001234',\n  endereco = 'Av. Paulista, 1000 - Bloco A - São Paulo, SP - CEP 01311-100',\n  valor = 150000.00\nWHERE id = 1;",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 355
+}
