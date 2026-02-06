@@ -7,12 +7,14 @@ import {
   romaneios,
   romaneioItems,
   inspections,
+  deliveryTerms,
   InsertSubscriptionPlan,
   InsertUserSubscription,
   InsertCompany,
   InsertRomaneio,
   InsertRomaneioItem,
   InsertInspection,
+  InsertDeliveryTerm,
 } from "../drizzle/schema";
 
 /**
@@ -341,4 +343,81 @@ export async function deleteInspection(inspectionId: number) {
   return db
     .delete(inspections)
     .where(eq(inspections.id, inspectionId));
+}
+
+/**
+ * Delivery Terms Management
+ */
+
+export async function getDeliveryTermsByInspection(inspectionId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(deliveryTerms)
+    .where(eq(deliveryTerms.inspectionId, inspectionId))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getDeliveryTermById(termId: number) {
+  const db = await getDb();
+  if (!db) return undefined;
+
+  const result = await db
+    .select()
+    .from(deliveryTerms)
+    .where(eq(deliveryTerms.id, termId))
+    .limit(1);
+
+  return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserDeliveryTerms(userId: number) {
+  const db = await getDb();
+  if (!db) return [];
+
+  return db
+    .select()
+    .from(deliveryTerms)
+    .where(eq(deliveryTerms.userId, userId))
+    .orderBy(desc(deliveryTerms.createdAt));
+}
+
+export async function createDeliveryTerm(term: InsertDeliveryTerm) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  const result = await db.insert(deliveryTerms).values(term);
+  return result;
+}
+
+export async function updateDeliveryTerm(
+  termId: number,
+  updates: Partial<InsertDeliveryTerm>
+) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  return db
+    .update(deliveryTerms)
+    .set(updates)
+    .where(eq(deliveryTerms.id, termId));
+}
+
+export async function deleteDeliveryTerm(termId: number) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+
+  return db
+    .delete(deliveryTerms)
+    .where(eq(deliveryTerms.id, termId));
+}
+
+export async function generateProtocolNumber(): Promise<string> {
+  const timestamp = Date.now();
+  const random = Math.floor(Math.random() * 10000);
+  return `TERMO-${timestamp}-${random}`;
 }

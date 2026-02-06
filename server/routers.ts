@@ -6,6 +6,7 @@ import { subscriptionRouter } from "./routers/subscription";
 import { romaneioRouter } from "./routers/romaneio";
 import { companyRouter } from "./routers/company";
 import { inspectionsRouter } from "./routers/inspections";
+import { deliveryTermsRouter } from "./routers/deliveryTerms";
 import { stripeRouter } from "./routers/stripe";
 
 export const appRouter = router({
@@ -25,6 +26,7 @@ export const appRouter = router({
   romaneio: romaneioRouter,
   company: companyRouter,
   inspections: inspectionsRouter,
+  deliveryTerms: deliveryTermsRouter,
   stripe: stripeRouter,
 });
 

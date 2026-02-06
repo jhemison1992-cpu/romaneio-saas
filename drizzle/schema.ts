@@ -176,3 +176,25 @@ export const stripeSubscriptions = mysqlTable("stripeSubscriptions", {
 
 export type StripeSubscription = typeof stripeSubscriptions.$inferSelect;
 export type InsertStripeSubscription = typeof stripeSubscriptions.$inferInsert;
+
+/**
+ * Delivery Terms for completed inspections
+ */
+export const deliveryTerms = mysqlTable("deliveryTerms", {
+  id: int("id").autoincrement().primaryKey(),
+  inspectionId: int("inspectionId").notNull(),
+  userId: int("userId").notNull(),
+  companyId: int("companyId"),
+  protocolNumber: varchar("protocolNumber", { length: 50 }).notNull().unique(),
+  completionDate: timestamp("completionDate").notNull(),
+  responsibleTechnician: varchar("responsibleTechnician", { length: 255 }).notNull(),
+  description: text("description"),
+  digitalSignature: text("digitalSignature"),
+  pdfUrl: text("pdfUrl"),
+  status: mysqlEnum("status", ["draft", "signed", "archived"]).notNull().default("draft"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type DeliveryTerm = typeof deliveryTerms.$inferSelect;
+export type InsertDeliveryTerm = typeof deliveryTerms.$inferInsert;

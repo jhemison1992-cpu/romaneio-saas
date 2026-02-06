@@ -36,6 +36,13 @@
       "when": 1770295756737,
       "tag": "0004_gifted_magneto",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1770373216495,
+      "tag": "0005_hot_hedge_knight",
+      "breakpoints": true
     }
   ]
 }
