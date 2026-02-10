@@ -130,15 +130,18 @@ export default function Dashboard() {
     navigate(`/romaneio/${id}`);
   };
 
+  const deleteRomaneioMutation = trpc.romaneio.delete.useMutation();
+
   const handleDeleteRomaneio = async (id: number) => {
-    if (!confirm("Tem certeza que deseja arquivar este romaneio?")) return;
+    if (!confirm("Tem certeza que deseja deletar este romaneio? Esta ação não pode ser desfeita.")) return;
 
     try {
-      // TODO: Implement delete mutation
-      toast.success("Romaneio arquivado com sucesso!");
+      await deleteRomaneioMutation.mutateAsync({ id });
+      toast.success("Romaneio deletado com sucesso!");
       romaneiosQuery.refetch();
     } catch (error) {
-      toast.error("Erro ao arquivar romaneio");
+      toast.error("Erro ao deletar romaneio");
+      console.error(error);
     }
   };
 

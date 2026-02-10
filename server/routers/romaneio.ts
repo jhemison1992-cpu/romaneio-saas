@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { getDb } from "../db";
+import { romaneios } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 import { protectedProcedure, router } from "../_core/trpc";
 import {
   getUserRomaneios,
@@ -12,6 +15,7 @@ import {
   getUserActiveSubscription,
   getSubscriptionPlanBySlug,
 } from "../db-features";
+
 
 export const romaneioRouter = router({
   // List all romaneios for the current user
@@ -123,7 +127,7 @@ export const romaneioRouter = router({
       return { success: true };
     }),
 
-  // Delete a romaneio (archive it)
+  // Delete a romaneio
   delete: protectedProcedure
     .input(z.object({ id: z.number() }))
     .mutation(async ({ ctx, input }) => {
@@ -136,7 +140,17 @@ export const romaneioRouter = router({
         throw new Error("Romaneio not found or unauthorized");
       }
 
-      await updateRomaneio(input.id, { status: "archived" });
+      // Delete all items first
+      const items = await getRomaneioItems(input.id);
+      for (const item of items) {
+        await deleteRomaneioItem(item.id);
+      }
+
+      // Delete the romaneio from database
+      const db = await getDb();
+      if (db) {
+        await db.delete(romaneios).where(eq(romaneios.id, input.id));
+      }
       return { success: true };
     }),
 
@@ -221,4 +235,5 @@ export const romaneioRouter = router({
       await deleteRomaneioItem(input.itemId);
       return { success: true };
     }),
+
 });

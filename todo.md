@@ -1109,3 +1109,8 @@
 - [x] Integrar componente DeliveryReportButton na página
 - [ ] Testar geração e download do termo com dados reais
 - [ ] Adicionar fotos do ambiente ao PDF (quando estrutura de fotos for implementada)
+
+## Bug Fixes
+- [x] Corrigir erro de deleção de obras (NotFoundError: removeChild)
+- [x] Implementar mutação delete no tRPC para remover obras completamente
+- [x] Atualizar função handleDeleteRomaneio no Dashboard para usar mutação
