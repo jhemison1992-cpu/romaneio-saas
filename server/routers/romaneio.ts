@@ -44,6 +44,14 @@ export const romaneioRouter = router({
         destinatario: z.string().min(1),
         dataEmissao: z.date(),
         observacoes: z.string().optional(),
+        responsavel: z.string().optional(),
+        tipoContrato: z.string().optional(),
+        contratante: z.string().optional(),
+        dataInicio: z.date().optional(),
+        previsaoTermino: z.date().optional(),
+        numeroContrato: z.string().optional(),
+        endereco: z.string().optional(),
+        valor: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -89,6 +97,14 @@ export const romaneioRouter = router({
         dataEntrega: z.date().optional(),
         status: z.enum(["draft", "completed", "archived"]).optional(),
         observacoes: z.string().optional(),
+        responsavel: z.string().optional(),
+        tipoContrato: z.string().optional(),
+        contratante: z.string().optional(),
+        dataInicio: z.date().optional(),
+        previsaoTermino: z.date().optional(),
+        numeroContrato: z.string().optional(),
+        endereco: z.string().optional(),
+        valor: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

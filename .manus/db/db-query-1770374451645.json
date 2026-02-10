@@ -1,0 +1,37 @@
+{
+  "query": "SELECT id, title, responsavel, tipoContrato, contratante, valor, status FROM romaneios WHERE userId = 1 ORDER BY id DESC;",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute SELECT id, title, responsavel, tipoContrato, contratante, valor, status FROM romaneios WHERE userId = 1 ORDER BY id DESC;",
+  "rows": [
+    {
+      "id": "3",
+      "title": "Instalação de Sistema de Climatização",
+      "responsavel": "Eng. Roberto Silva",
+      "tipoContrato": "Empreitada por Preço Global com Reajuste",
+      "contratante": "Empresa de Climatização XYZ",
+      "valor": "250000.00",
+      "status": "draft"
+    },
+    {
+      "id": "2",
+      "title": "Projeto de Reforma - Fachada e Pintura",
+      "responsavel": "Eng. Marina Costa",
+      "tipoContrato": "Empreitada por Preço Global",
+      "contratante": "Construtora Premium Ltda",
+      "valor": "85000.00",
+      "status": "completed"
+    },
+    {
+      "id": "1",
+      "title": "Obra Teste - Instalação de Janelas",
+      "responsavel": "Eng. João da Silva",
+      "tipoContrato": "Empreitada por Preço Global",
+      "contratante": "Construtora ABC Ltda",
+      "valor": "150000.00",
+      "status": "completed"
+    }
+  ],
+  "messages": [],
+  "stdout": "id\ttitle\tresponsavel\ttipoContrato\tcontratante\tvalor\tstatus\n3\tInstalação de Sistema de Climatização\tEng. Roberto Silva\tEmpreitada por Preço Global com Reajuste\tEmpresa de Climatização XYZ\t250000.00\tdraft\n2\tProjeto de Reforma - Fachada e Pintura\tEng. Marina Costa\tEmpreitada por Preço Global\tConstrutora Premium Ltda\t85000.00\tcompleted\n1\tObra Teste - Instalação de Janelas\tEng. João da Silva\tEmpreitada por Preço Global\tConstrutora ABC Ltda\t150000.00\tcompleted\n",
+  "stderr": "",
+  "execution_time_ms": 351
+}

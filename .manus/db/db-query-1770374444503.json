@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO romaneios (userId, companyId, title, remetente, destinatario, dataEmissao, status, observacoes, responsavel, tipoContrato, contratante, dataInicio, previsaoTermino, numeroContrato, endereco, valor, createdAt, updatedAt)\nVALUES (\n  1, \n  1,\n  'Projeto de Reforma - Fachada e Pintura',\n  'ALUMINC Teste',\n  'Condomínio Residencial Vista Mar',\n  NOW(),\n  'completed',\n  'Reforma completa da fachada com pintura externa e tratamento de infiltrações',\n  'Eng. Marina Costa',\n  'Empreitada por Preço Global',\n  'Construtora Premium Ltda',\n  '2026-02-01',\n  '2026-04-15',\n  'CT-2026-005678',\n  'Av. Beira Mar, 2500 - Bloco B - Apto 1200 - Rio de Janeiro, RJ - CEP 20000-000',\n  85000.00,\n  NOW(),\n  NOW()\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute INSERT INTO romaneios (userId, companyId, title, remetente, destinatario, dataEmissao, status, observacoes, responsavel, tipoContrato, contratante, dataInicio, previsaoTermino, numeroContrato, endereco, valor, createdAt, updatedAt)\nVALUES (\n  1, \n  1,\n  'Projeto de Reforma - Fachada e Pintura',\n  'ALUMINC Teste',\n  'Condomínio Residencial Vista Mar',\n  NOW(),\n  'completed',\n  'Reforma completa da fachada com pintura externa e tratamento de infiltrações',\n  'Eng. Marina Costa',\n  'Empreitada por Preço Global',\n  'Construtora Premium Ltda',\n  '2026-02-01',\n  '2026-04-15',\n  'CT-2026-005678',\n  'Av. Beira Mar, 2500 - Bloco B - Apto 1200 - Rio de Janeiro, RJ - CEP 20000-000',\n  85000.00,\n  NOW(),\n  NOW()\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 350
+}

@@ -1,0 +1,9 @@
+{
+  "query": "INSERT INTO romaneios (userId, companyId, title, remetente, destinatario, dataEmissao, status, observacoes, responsavel, tipoContrato, contratante, dataInicio, previsaoTermino, numeroContrato, endereco, valor, createdAt, updatedAt)\nVALUES (\n  1, \n  1,\n  'Instalação de Sistema de Climatização',\n  'ALUMINC Teste',\n  'Edifício Comercial Centro Business',\n  NOW(),\n  'draft',\n  'Instalação de ar condicionado central em 15 andares com sistema de automação',\n  'Eng. Roberto Silva',\n  'Empreitada por Preço Global com Reajuste',\n  'Empresa de Climatização XYZ',\n  '2026-03-01',\n  '2026-08-31',\n  'CT-2026-009012',\n  'Rua do Comércio, 500 - Centro - São Paulo, SP - CEP 01000-000',\n  250000.00,\n  NOW(),\n  NOW()\n);",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway03.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 4ANFNhG7c8VGQva.6b509d448810 --database 4HLJ5HMZrp5HsaDfa4mpFt --execute INSERT INTO romaneios (userId, companyId, title, remetente, destinatario, dataEmissao, status, observacoes, responsavel, tipoContrato, contratante, dataInicio, previsaoTermino, numeroContrato, endereco, valor, createdAt, updatedAt)\nVALUES (\n  1, \n  1,\n  'Instalação de Sistema de Climatização',\n  'ALUMINC Teste',\n  'Edifício Comercial Centro Business',\n  NOW(),\n  'draft',\n  'Instalação de ar condicionado central em 15 andares com sistema de automação',\n  'Eng. Roberto Silva',\n  'Empreitada por Preço Global com Reajuste',\n  'Empresa de Climatização XYZ',\n  '2026-03-01',\n  '2026-08-31',\n  'CT-2026-009012',\n  'Rua do Comércio, 500 - Centro - São Paulo, SP - CEP 01000-000',\n  250000.00,\n  NOW(),\n  NOW()\n);",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 353
+}

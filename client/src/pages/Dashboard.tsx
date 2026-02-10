@@ -20,6 +20,9 @@ export default function Dashboard() {
   const [, navigate] = useLocation();
   const [showNewForm, setShowNewForm] = useState(false);
   const [cadastroType, setCadastroType] = useState("completo");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState("recent");
   const [formData, setFormData] = useState({
     title: "",
     responsavel: "",
@@ -47,6 +50,26 @@ export default function Dashboard() {
 
   const romaneios = romaneiosQuery.data || [];
   const subscription = subscriptionQuery.data;
+
+  const filteredRomaneios = romaneios
+    .filter((r: any) => {
+      const matchesSearch = r.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.remetente?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.destinatario?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        r.responsavel?.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = !statusFilter || r.status === statusFilter;
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a: any, b: any) => {
+      if (sortBy === "recent") {
+        return new Date(b.dataEmissao).getTime() - new Date(a.dataEmissao).getTime();
+      } else if (sortBy === "valor-alto") {
+        return (parseFloat(b.valor as any) || 0) - (parseFloat(a.valor as any) || 0);
+      } else if (sortBy === "valor-baixo") {
+        return (parseFloat(a.valor as any) || 0) - (parseFloat(b.valor as any) || 0);
+      }
+      return 0;
+    });
 
   const handleNewRomaneio = () => {
     setShowNewForm(true);
@@ -158,12 +181,58 @@ export default function Dashboard() {
           </Card>
         )}
 
-        {/* Romaneios List */}
+        {/* Filtros e Busca */}
+        <Card>
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <Label className="text-xs font-semibold text-slate-600 uppercase">Buscar</Label>
+                  <Input
+                    placeholder="Buscar por título, remetente, destinatário..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <div>
+                  <Label className="text-xs font-semibold text-slate-600 uppercase">Status</Label>
+                  <Select value={statusFilter || "all"} onValueChange={(value) => setStatusFilter(value === "all" ? null : value)}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Todos os status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">Todos os status</SelectItem>
+                      <SelectItem value="draft">Rascunho</SelectItem>
+                      <SelectItem value="completed">Concluído</SelectItem>
+                      <SelectItem value="archived">Arquivado</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label className="text-xs font-semibold text-slate-600 uppercase">Ordenar por</Label>
+                  <Select value={sortBy} onValueChange={setSortBy}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="recent">Mais Recentes</SelectItem>
+                      <SelectItem value="valor-alto">Maior Valor</SelectItem>
+                      <SelectItem value="valor-baixo">Menor Valor</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+                {/* Romaneios List */}
         <Card>
           <CardHeader>
             <CardTitle>Minhas Obras</CardTitle>
             <CardDescription>
-              {romaneios.length} obra{romaneios.length !== 1 ? "s" : ""} criada{romaneios.length !== 1 ? "s" : ""}
+              {filteredRomaneios.length} de {romaneios.length} obra{romaneios.length !== 1 ? "s" : ""}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -177,7 +246,7 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {romaneios.map((romaneio) => (
+                {filteredRomaneios.map((romaneio: any) => (
                   <div
                     key={romaneio.id}
                     className="group bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-slate-100 hover:border-blue-200"
