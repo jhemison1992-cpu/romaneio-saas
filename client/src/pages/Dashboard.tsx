@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardLayout from "@/components/DashboardLayout";
+import StatsOverview from "@/components/StatsOverview";
 import { Plus, FileText, Download, Trash2, Building2, Users, X, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -182,6 +183,16 @@ export default function Dashboard() {
             </Button>
           </div>
         </div>
+
+        {/* Stats Overview */}
+        <StatsOverview 
+          stats={{
+            total: romaneios.length,
+            emAndamento: romaneios.filter((r: any) => r.status === 'em-andamento').length,
+            concluidas: romaneios.filter((r: any) => r.status === 'completed').length,
+            atrasadas: 0,
+          }}
+        />
 
         {/* Subscription Info */}
         {subscription && (

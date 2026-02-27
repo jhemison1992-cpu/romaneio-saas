@@ -175,3 +175,118 @@
     }
   }
 }
+
+/* ========== CUSTOM COLORS FOR NEW DESIGN ========== */
+:root {
+  --color-teal-50: #f0fdfa;
+  --color-teal-100: #ccfbf1;
+  --color-teal-500: #14b8a6;
+  --color-teal-600: #0d9488;
+  
+  --color-sky-50: #f0f9ff;
+  --color-sky-100: #e0f2fe;
+  --color-sky-500: #0ea5e9;
+  --color-sky-600: #0284c7;
+  
+  --color-emerald-50: #f0fdf4;
+  --color-emerald-100: #dcfce7;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  
+  --color-rose-50: #fff5f7;
+  --color-rose-100: #ffe4e6;
+  --color-rose-500: #f43f5e;
+  --color-rose-600: #e11d48;
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.35s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@media (max-width: 768px) {
+  .touch-feedback:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.snap-x-mandatory {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-x-mandatory > * {
+  scroll-snap-align: start;
+}
+
+/* ========== CARD STYLES ========== */
+.stat-card {
+  @apply bg-white rounded-2xl shadow-sm p-4 sm:p-6 border border-gray-100 relative overflow-hidden hover:shadow-md transition-all duration-300;
+}
+
+.stat-card-mobile {
+  @apply flex-shrink-0 w-[42vw] bg-white rounded-2xl shadow-sm p-4 border border-gray-100 relative overflow-hidden;
+}
+
+.stat-icon {
+  @apply w-9 h-9 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center;
+}
+
+.stat-value {
+  @apply text-2xl sm:text-3xl font-bold text-gray-900;
+}
+
+.stat-label {
+  @apply text-[11px] sm:text-sm font-medium text-gray-500 mt-0.5 sm:mt-2;
+}
