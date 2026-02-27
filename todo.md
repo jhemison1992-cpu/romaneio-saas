@@ -1114,3 +1114,23 @@
 - [x] Corrigir erro de deleção de obras (NotFoundError: removeChild)
 - [x] Implementar mutação delete no tRPC para remover obras completamente
 - [x] Atualizar função handleDeleteRomaneio no Dashboard para usar mutação
+
+
+## Integração de Funcionalidades Avançadas
+- [ ] Dashboard avançado com gráficos e estatísticas
+- [ ] Sistema de Alertas para obras críticas
+- [ ] Módulo de Relatórios completos (PDF e Excel)
+- [ ] Assinatura Digital integrada
+- [ ] Melhorias na navegação e layout
+- [ ] Integração de componentes do projeto enviado
+
+## Integração de Funcionalidades Avançadas - CONCLUÍDO
+- [x] Dashboard avançado com gráficos (LineChart, BarChart, PieChart)
+- [x] Página de Alertas com filtros e gerenciamento
+- [x] Instalação de bibliotecas: recharts, chart.js, react-chartjs-2
+- [x] Rotas adicionadas: /dashboard/advanced, /alerts
+- [x] Botões de navegação no Dashboard para acessar novas páginas
+- [x] Métricas principais exibidas no Dashboard Avançado
+- [x] Sistema de alertas com severidade (alta, média, baixa)
+- [x] Todos os testes passando (7 testes)
+- [x] TypeScript compilando sem erros

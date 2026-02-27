@@ -17,6 +17,8 @@ import Inspections from "./pages/Inspections";
 import InspectionDetail from "./pages/InspectionDetail";
 import Users from "./pages/Users";
 import TemplateSelector from "./pages/TemplateSelector";
+import AdvancedDashboard from "./pages/AdvancedDashboard";
+import Alerts from "./pages/Alerts";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -27,6 +29,8 @@ function Router() {
       <Route path={"/plans"} component={PlanSelection} />
       <Route path={"/setup"} component={CompanySetup} />
       <Route path={"/dashboard"} component={Dashboard} />
+      <Route path={"/dashboard/advanced"} component={AdvancedDashboard} />
+      <Route path={"/alerts"} component={Alerts} />
       <Route path={"/inspections"} component={Inspections} />
       <Route path={"/inspections/:id"} component={InspectionDetail} />
       <Route path={"/users"} component={Users} />

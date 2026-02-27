@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DashboardLayout from "@/components/DashboardLayout";
-import { Plus, FileText, Download, Trash2, Building2, Users, X } from "lucide-react";
+import { Plus, FileText, Download, Trash2, Building2, Users, X, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useLocation } from "wouter";
@@ -156,13 +156,31 @@ export default function Dashboard() {
               Gerencie seus romaneios e obras
             </p>
           </div>
-          <Button 
-            onClick={handleNewRomaneio} 
-            className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-          >
-            <Plus className="h-4 w-4" />
-            Nova Obra
-          </Button>
+          <div className="flex gap-2 flex-wrap">
+            <Button 
+              onClick={() => navigate('/dashboard/advanced')} 
+              variant="outline"
+              className="gap-2"
+            >
+              <FileText className="h-4 w-4" />
+              Dashboard Avançado
+            </Button>
+            <Button 
+              onClick={() => navigate('/alerts')} 
+              variant="outline"
+              className="gap-2"
+            >
+              <AlertCircle className="h-4 w-4" />
+              Alertas
+            </Button>
+            <Button 
+              onClick={handleNewRomaneio} 
+              className="gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+            >
+              <Plus className="h-4 w-4" />
+              Nova Obra
+            </Button>
+          </div>
         </div>
 
         {/* Subscription Info */}
